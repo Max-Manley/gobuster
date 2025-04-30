@@ -2,6 +2,7 @@ package cli
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -30,21 +31,27 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 	}
 
 	for r := range g.Progress.ResultChan {
-		s, err := r.ResultToString()
+		raw, err := r.ResultToString()
 		if err != nil {
 			g.Logger.Fatal(err)
 		}
-		if s != "" {
-			s = strings.TrimSpace(s)
-			_, _ = fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, s)
-			if f != nil {
-				err = writeToFile(f, s)
-				if err != nil {
-					g.Logger.Fatalf("error on writing output file: %v", err)
-				}
-			}
+		if raw == "" {
+			continue
+		}
+		raw = strings.TrimSpace(raw)
+		var line []byte
+		if g.Opts.JSONOut {
+			line, _ = json.Marshal(map[string]string{"result": raw})
+		} 
+		else {
+			line = []byte(raw)
+		}
+		_, _ = fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
+		if f != nil {
+			_, _ = f.Write(append(line, '\n'))
 		}
 	}
+}
 }
 
 // errorWorker outputs the errors as they come in. This needs to be a range and should not handle
