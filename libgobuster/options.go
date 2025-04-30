@@ -17,6 +17,7 @@ type Options struct {
 	Quiet          bool
 	Verbose        bool
 	Delay          time.Duration
+	JSONOut       bool
 }
 
 // NewOptions returns a new initialized Options object
