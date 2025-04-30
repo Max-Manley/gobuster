@@ -151,6 +151,11 @@ func parseGlobalOptions() (*libgobuster.Options, error) {
 		return nil, fmt.Errorf("invalid value for no-error: %w", err)
 	}
 
+	globalopts.JSONOut, err = rootCmd.Flags().GetBool("json")
+	if err != nil {
+		return nil, fmt.Errorf("invalid value for json: %w", err)
+	}
+
 	noColor, err := rootCmd.Flags().GetBool("no-color")
 	if err != nil {
 		return nil, fmt.Errorf("invalid value for no-color: %w", err)
