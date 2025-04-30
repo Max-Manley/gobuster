@@ -191,4 +191,5 @@ func init() {
 	rootCmd.PersistentFlags().StringP("pattern", "p", "", "File containing replacement patterns")
 	rootCmd.PersistentFlags().Bool("no-color", false, "Disable color output")
 	rootCmd.PersistentFlags().Bool("debug", false, "Enable debug output")
+	rootCmd.PersistentFlags().BoolP("json", "J", false, "Output result as JSON")
 }
