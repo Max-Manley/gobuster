@@ -48,8 +48,12 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 			line = []byte(raw)
 		}
 
-		// stdout
-		_, _ = fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
+		
+		if g.Opts.JSONOut {
+			fmt.Println(string(line))        
+		} else {
+			fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
+		}
 
 		// (optional) file
 		if f != nil {
