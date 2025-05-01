@@ -40,7 +40,6 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 		}
 		raw = strings.TrimSpace(raw)
 
-		// ─── plain text or JSON? ───────────────────────────────────────────────
 		var line []byte
 		if g.Opts.JSONOut {
 			line, _ = json.Marshal(map[string]string{"result": raw})
@@ -55,7 +54,6 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 			fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
 		}
 
-		// (optional) file
 		if f != nil {
 			_, _ = f.Write(append(line, '\n'))
 		}
