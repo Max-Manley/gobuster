@@ -52,7 +52,6 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 		}
 	}
 }
-}
 
 // errorWorker outputs the errors as they come in. This needs to be a range and should not handle
 // the context so the channel always has a receiver and libgobuster will not block.
