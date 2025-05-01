@@ -49,7 +49,12 @@ func resultWorker(g *libgobuster.Gobuster, filename string, wg *sync.WaitGroup) 
 		}
 
 		// stdout
-		_, _ = fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
+		if g.Opts.JSONOut {
+		    fmt.Println(string(line)) // print clean JSON
+		} 
+		else {
+		    fmt.Printf("%s%s\n", TERMINAL_CLEAR_LINE, line)
+		}
 
 		// (optional) file
 		if f != nil {
